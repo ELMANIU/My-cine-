@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netflix Style Player</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#000;height:100%;font-family:'Roboto',sans-serif}
+#player{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:black}
+video{max-width:100%;max-height:100%;object-fit:contain;background:black}
+.header{position:absolute;top:0;left:0;padding:10px 20px;display:flex;align-items:center;gap:10px;z-index:5;background:rgba(0,0,0,0.5)}
+.header img{height:28px}
+.header h1{color:white;font-size:1.2em;margin:0;font-weight:700}
+/* Ventana emergente estilo Netflix */
+#infoPopup{
+  display:none;position:absolute;inset:0;background:rgba(0,0,0,0.95);
+  z-index:10;flex-direction:column;align-items:center;justify-content:center;
+  color:white;padding:20px;animation:fadeIn .5s ease;
+}
+#infoPopup img{width:200px;border-radius:5px;box-shadow:0 0 20px rgba(0,0,0,0.8);margin-bottom:20px}
+#infoPopup h2{font-size:1.5em;margin-bottom:10px}
+#infoPopup p{max-width:400px;text-align:center;line-height:1.4;margin-bottom:15px}
+.rating{display:flex;align-items:center;gap:5px;font-size:1.1em}
+.rating span{color:gold}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.controls{position:absolute;bottom:0;width:100%;padding:1em;display:flex;gap:10px;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);transition:opacity .3s ease}
+.controls.hidden{opacity:0;pointer-events:none}
+.btn{background:none;border:none;cursor:pointer;color:white;display:flex;align-items:center;justify-content:center;padding:6px}
+</style>
+</head>
+<body>
+
+<div id="player">
+  <video id="video" autoplay>
+    <source src="https://dl.dropbox.com/scl/fi/79tv4xd898232yg8yvj87/Rick-and-Morty-S08E01.mp4?rlkey=4jdtixx8babyd33faj6d9t29e&st=1l0a81lh&dl=0" type="video/mp4">
+  </video>
+
+  <!-- Header con logo + título -->
+  <div class="header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Rick_and_Morty.svg/2560px-Rick_and_Morty.svg.png" alt="Logo">
+    <h1>S8 E1 - La "Summer" de Todos los Miedos</h1>
+  </div>
+
+  <!-- Ventana emergente -->
+  <div id="infoPopup">
+    <img src="https://m.media-amazon.com/images/M/MV5B.jpg" alt="Poster">
+    <h2>S8 E1 - La "Summer" de Todos los Miedos</h2>
+    <p>Rick y Morty se embarcan en una nueva aventura interdimensional llena de caos y risas peligrosas.</p>
+    <div class="rating"><span>⭐</span> 9.0/10</div>
+    <small>Usa las flechas para navegar, OK para cerrar, BACK para salir</small>
+  </div>
+
+  <!-- Controles -->
+  <div id="controls" class="controls">
+    <button id="play" class="btn">▶</button>
+  </div>
+</div>
+
+<script>
+const video=document.getElementById('video'),
+      playBtn=document.getElementById('play'),
+      infoPopup=document.getElementById('infoPopup');
+
+playBtn.onclick=()=>{
+  video.play();
+  showNetflixPopup();
+};
+
+function showNetflixPopup(){
+  infoPopup.style.display='flex';
+  video.pause();
+}
+
+document.addEventListener('keydown',e=>{
+  switch(e.key){
+    case 'Enter':
+      if(infoPopup.style.display==='flex'){infoPopup.style.display='none';video.play();}
+      else{showNetflixPopup();}
+      break;
+    case 'Backspace': case 'Escape':
+      if(infoPopup.style.display==='flex'){infoPopup.style.display='none';}
+      else{window.history.back();}
+      break;
+    case 'ArrowLeft': video.currentTime-=10; break;
+    case 'ArrowRight': video.currentTime+=10; break;
+    case 'ArrowUp': video.volume=Math.min(1,video.volume+0.1); break;
+    case 'ArrowDown': video.volume=Math.max(0,video.volume-0.1); break;
+  }
+});
+
+// Fullscreen automático
+window.onload=()=>{
+  if(document.documentElement.requestFullscreen){
+    document.documentElement.requestFullscreen();
+  }
+};
+</script>
+</body>
+</html>

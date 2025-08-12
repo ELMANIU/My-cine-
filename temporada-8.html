@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rick y Morty - Temporada 8</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+body{
+    background:#000;
+    font-family:"Poppins", sans-serif;
+    color:#fff;
+    margin:0;
+}
+header{
+    background:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTThjHs93XnNMr0_G5eO-XkQSIx0enszhNvAJp4v8vJQvAdKGnuIk5QDno&s=10') center/cover no-repeat;
+    position:relative;
+    padding:60px 20px;
+    text-align:center;
+}
+header::after{
+    content:"";
+    position:absolute;top:0;left:0;width:100%;height:100%;
+    background:rgba(0,0,0,0.6);
+}
+header h1{
+    position:relative;
+    font-size:2.5em;
+    z-index:1;
+}
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+}
+.episode{
+    display:flex;
+    flex-wrap:wrap;
+    background:rgba(255,255,255,0.05);
+    border-radius:8px;
+    margin-bottom:20px;
+    overflow:hidden;
+    transition:transform 0.3s;
+}
+.episode:hover{
+    transform:scale(1.02);
+}
+.episode img{
+    width:200px;
+    object-fit:cover;
+}
+.ep-info{
+    padding:15px;
+    flex:1;
+}
+.ep-info h2{
+    margin:0;
+    font-size:1.3em;
+}
+.meta{
+    font-size:0.9em;
+    opacity:0.8;
+    margin-bottom:10px;
+}
+.rating{
+    color:gold;
+    font-weight:bold;
+}
+.desc{
+    font-size:0.95em;
+    margin-bottom:12px;
+}
+.btn{
+    padding:8px 16px;
+    background:#ff1744;
+    color:#fff;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    transition:background 0.3s;
+    text-decoration:none;
+}
+.btn:hover{
+    background:#d50000;
+}
+.back{
+    display:inline-block;
+    margin-bottom:20px;
+    color:#fff;
+    text-decoration:none;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Rick y Morty - Temporada 8</h1>
+</header>
+
+<div class="container">
+    <a href="detalle-rick.html" class="back">⬅ Volver a Detalles</a>
+
+    <!-- Episodio 1 -->
+    <div class="episode">
+        <img src="https://m.media-amazon.com/images/M/MV5BZmMwOWIyNDQtZWRkOC00YzNmLTgxMzgtMmM4YjI5ODViMDIwXkEyXkFqcGc@._V1_.jpg" alt="Episodio 1">
+        <div class="ep-info">
+            <h2>T8.E1 ∙ Verano de todos los miedos</h2>
+            <div class="meta">📅 25 de mayo de 2025 | ⭐ 8.3/10 (6.5k votos)</div>
+            <p class="desc">Rick dejó a los niños en una matrix.</p>
+            <a href="Reproductor.html" class="btn">Ver Ahora</a>
+        </div>
+    </div>
+
+    <!-- Episodio 2 -->
+    <div class="episode">
+        <img src="https://m.media-amazon.com/images/M/MV5BZmMwOWIyNDQtZWRkOC00YzNmLTgxMzgtMmM4YjI5ODViMDIwXkEyXkFqcGc@._V1_.jpg" alt="Episodio 2">
+        <div class="ep-info">
+            <h2>T8.E2 ∙ Valquiria</h2>
+            <div class="meta">📅 1 de junio de 2025 | ⭐ 7.0/10 (4.8k votos)</div>
+            <p class="desc">Space Beth llama a su padre para que la lleve, hermano.</p>
+            <a href="capitulo-t8e2.html" class="btn">Ver Ahora</a>
+        </div>
+    </div>
+
+    <!-- Episodio 3 -->
+    <div class="episode">
+        <img src="https://m.media-amazon.com/images/M/MV5BZmMwOWIyNDQtZWRkOC00YzNmLTgxMzgtMmM4YjI5ODViMDIwXkEyXkFqcGc@._V1_.jpg" alt="Episodio 3">
+        <div class="ep-info">
+            <h2>T8.E3 ∙ El Rick, el Mort y el Feo</h2>
+            <div class="meta">📅 8 de junio de 2025 | ⭐ 7.9/10 (5k votos)</div>
+            <p class="desc">Unos tipos quieren reconstruir la Ciudadela; mala idea, bro.</p>
+            <a href="capitulo-t8e3.html" class="btn">Ver Ahora</a>
+        </div>
+    </div>
+
+    <!-- Episodio 4 -->
+    <div class="episode">
+        <img src="https://m.media-amazon.com/images/M/MV5BZmMwOWIyNDQtZWRkOC00YzNmLTgxMzgtMmM4YjI5ODViMDIwXkEyXkFqcGc@._V1_.jpg" alt="Episodio 4">
+        <div class="ep-info">
+            <h2>T8.E4 ∙ Pascuas en la familia Smith</h2>
+            <div class="meta">📅 -- de junio de 2025 | ⭐ 6.3/10 (4.5k votos)</div>
+            <p class="desc">La familia Smith aprende sobre el significado del Día de Pascuas.</p>
+            <a href="capitulo-t8e4.html" class="btn">Ver Ahora</a>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
