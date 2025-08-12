@@ -9,92 +9,165 @@
 html,body{margin:0;padding:0;background:#000;height:100%;font-family:'Roboto',sans-serif}
 #player{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:black}
 video{max-width:100%;max-height:100%;object-fit:contain;background:black}
-.header{position:absolute;top:0;left:0;padding:10px 20px;display:flex;align-items:center;gap:10px;z-index:5;background:rgba(0,0,0,0.5)}
+.controls,.header{transition:opacity .3s ease}
+.controls.hidden,.header.hidden{opacity:0;pointer-events:none}
+.controls{position:absolute;bottom:0;width:100%;padding:1em;display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent)}
+.btn{background:none;border:none;cursor:pointer;color:white;display:flex;align-items:center;justify-content:center;padding:6px}
+.btn svg{width:24px;height:24px;fill:white;transition:transform .2s}
+.btn:hover svg{transform:scale(1.2);fill:#E50914}
+.center-play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.6);border-radius:50%;padding:20px;cursor:pointer;transition:transform .2s;z-index:4}
+.center-play-btn:hover{transform:translate(-50%,-50%) scale(1.1)}
+.center-play-btn svg{width:48px;height:48px;fill:white}
+.progress{flex:1;-webkit-appearance:none;height:5px;background:rgba(255,255,255,0.3);border-radius:2.5px;cursor:pointer}
+.progress::-webkit-slider-thumb{-webkit-appearance:none;background:#E50914;width:14px;height:14px;border-radius:50%}
+.time{color:white;font-size:.9em}
+.header{position:absolute;top:0;left:0;padding:10px 20px;display:flex;align-items:center;gap:10px;z-index:5}
 .header img{height:28px}
 .header h1{color:white;font-size:1.2em;margin:0;font-weight:700}
-/* Ventana emergente estilo Netflix */
-#infoPopup{
-  display:none;position:absolute;inset:0;background:rgba(0,0,0,0.95);
-  z-index:10;flex-direction:column;align-items:center;justify-content:center;
-  color:white;padding:20px;animation:fadeIn .5s ease;
-}
-#infoPopup img{width:200px;border-radius:5px;box-shadow:0 0 20px rgba(0,0,0,0.8);margin-bottom:20px}
-#infoPopup h2{font-size:1.5em;margin-bottom:10px}
-#infoPopup p{max-width:400px;text-align:center;line-height:1.4;margin-bottom:15px}
-.rating{display:flex;align-items:center;gap:5px;font-size:1.1em}
-.rating span{color:gold}
+.pause-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0.8));display:none;z-index:3}
+.thumbnail-tooltip{position:absolute;bottom:50px;width:160px;height:90px;background:black;display:none;justify-content:center;align-items:center;color:white;font-size:14px;border:1px solid #444;z-index:6}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:100;animation:fadeIn 0.3s ease}
+.modal-content{background:#111;color:white;max-width:500px;padding:20px;border-radius:10px;text-align:center;box-shadow:0 0 20px rgba(0,0,0,0.8)}
+.modal img{width:100%;border-radius:10px;margin-bottom:15px}
+.stars{color:#E50914;font-size:1.2em;margin:10px 0}
+.close-btn{background:#E50914;border:none;color:white;padding:8px 16px;margin-top:15px;border-radius:5px;cursor:pointer;font-weight:bold}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.controls{position:absolute;bottom:0;width:100%;padding:1em;display:flex;gap:10px;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);transition:opacity .3s ease}
-.controls.hidden{opacity:0;pointer-events:none}
-.btn{background:none;border:none;cursor:pointer;color:white;display:flex;align-items:center;justify-content:center;padding:6px}
 </style>
 </head>
 <body>
-
 <div id="player">
   <video id="video" autoplay>
     <source src="https://dl.dropbox.com/scl/fi/79tv4xd898232yg8yvj87/Rick-and-Morty-S08E01.mp4?rlkey=4jdtixx8babyd33faj6d9t29e&st=1l0a81lh&dl=0" type="video/mp4">
   </video>
-
-  <!-- Header con logo + título -->
-  <div class="header">
+  <div class="header" id="header">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Rick_and_Morty.svg/2560px-Rick_and_Morty.svg.png" alt="Logo">
-    <h1>S8 E1 - La "Summer" de Todos los Miedos</h1>
+    <h1 id="videoTitle">S8 E1 - La "Summer" de Todos los Miedos</h1>
   </div>
-
-  <!-- Ventana emergente -->
-  <div id="infoPopup">
-    <img src="https://m.media-amazon.com/images/M/MV5B.jpg" alt="Poster">
-    <h2>S8 E1 - La "Summer" de Todos los Miedos</h2>
-    <p>Rick y Morty se embarcan en una nueva aventura interdimensional llena de caos y risas peligrosas.</p>
-    <div class="rating"><span>⭐</span> 9.0/10</div>
-    <small>Usa las flechas para navegar, OK para cerrar, BACK para salir</small>
-  </div>
-
-  <!-- Controles -->
+  <div id="pauseOverlay" class="pause-overlay"></div>
+  <div id="thumbnailTooltip" class="thumbnail-tooltip">00:00</div>
+  <button id="centerPlay" class="center-play-btn">
+    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+  </button>
   <div id="controls" class="controls">
-    <button id="play" class="btn">▶</button>
+    <button id="play" class="btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+    <span id="current" class="time">00:00</span>
+    <input id="progress" class="progress" type="range" value="0" min="0" max="100">
+    <span id="duration" class="time">00:00</span>
+    <button id="rew" class="btn"><svg viewBox="0 0 24 24"><path d="M11 19V5l-9 7 9 7zm2-14v14l9-7-9-7z"/></svg></button>
+    <button id="fwd" class="btn"><svg viewBox="0 0 24 24"><path d="M13 5v14l9-7-9-7zm-2 14V5l-9 7 9 7z"/></svg></button>
+    <button id="mute" class="btn"><svg viewBox="0 0 24 24"><path d="M7 9v6h4l5 5V4l-5 5H7z"/></svg></button>
+    <button id="fullscreen" class="btn"><svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm0-4h2V7h3V5H7v5zm10 4h-3v3h-2v5h5v-5h-2v-3zm0-4h2V5h-5v2h3v3z"/></svg></button>
+  </div>
+</div>
+
+<div id="infoModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <img src="https://static.wikia.nocookie.net/rick-y-morty-espanol/images/7/7f/Rick-and-Morty-Season-8-Poster.jpg" alt="Poster">
+    <h2>S8 E1 - La "Summer" de Todos los Miedos</h2>
+    <div class="stars">⭐⭐⭐⭐⭐</div>
+    <p>En esta nueva aventura, Rick y Morty enfrentan una amenaza que pondrá a prueba su ingenio y su unión familiar como nunca antes.</p>
+    <button id="closeModal" class="close-btn">Cerrar</button>
   </div>
 </div>
 
 <script>
-const video=document.getElementById('video'),
-      playBtn=document.getElementById('play'),
-      infoPopup=document.getElementById('infoPopup');
+// === Detección de dispositivo ===
+function detectarDispositivo() {
+  const ua = navigator.userAgent.toLowerCase();
+  if (/mobile|android|iphone|ipad|ipod/.test(ua)) return "Móvil";
+  if (/smart-tv|hbbtv|netcast|viera|appletv|googletv|aftb/.test(ua)) return "Televisión";
+  return "PC";
+}
+const tipoDispositivo = detectarDispositivo();
+console.log("📱 Tipo de dispositivo detectado:", tipoDispositivo);
 
-playBtn.onclick=()=>{
-  video.play();
-  showNetflixPopup();
-};
-
-function showNetflixPopup(){
-  infoPopup.style.display='flex';
-  video.pause();
+// Personalización según dispositivo
+if(tipoDispositivo === "Televisión") {
+  document.body.style.backgroundColor = "#111";
+} else if(tipoDispositivo === "Móvil") {
+  document.getElementById('videoTitle').textContent += " 🎯 Versión móvil";
 }
 
-document.addEventListener('keydown',e=>{
-  switch(e.key){
-    case 'Enter':
-      if(infoPopup.style.display==='flex'){infoPopup.style.display='none';video.play();}
-      else{showNetflixPopup();}
-      break;
-    case 'Backspace': case 'Escape':
-      if(infoPopup.style.display==='flex'){infoPopup.style.display='none';}
-      else{window.history.back();}
-      break;
-    case 'ArrowLeft': video.currentTime-=10; break;
-    case 'ArrowRight': video.currentTime+=10; break;
-    case 'ArrowUp': video.volume=Math.min(1,video.volume+0.1); break;
-    case 'ArrowDown': video.volume=Math.max(0,video.volume-0.1); break;
-  }
-});
+// === Código original del reproductor ===
+const video=document.getElementById('video'),
+      playBtn=document.getElementById('play'),
+      centerPlay=document.getElementById('centerPlay'),
+      controls=document.getElementById('controls'),
+      header=document.getElementById('header'),
+      progress=document.getElementById('progress'),
+      current=document.getElementById('current'),
+      duration=document.getElementById('duration'),
+      rew=document.getElementById('rew'),
+      fwd=document.getElementById('fwd'),
+      mute=document.getElementById('mute'),
+      fullscreen=document.getElementById('fullscreen'),
+      pauseOverlay=document.getElementById('pauseOverlay'),
+      tooltip=document.getElementById('thumbnailTooltip'),
+      infoModal=document.getElementById('infoModal'),
+      closeModal=document.getElementById('closeModal');
 
-// Fullscreen automático
-window.onload=()=>{
-  if(document.documentElement.requestFullscreen){
-    document.documentElement.requestFullscreen();
+let hideTimeout, firstPlay=true;
+const fmt=s=>isNaN(s)?"00:00":`${Math.floor(s/60).toString().padStart(2,'0')}:${Math.floor(s%60).toString().padStart(2,'0')}`;
+
+video.onloadedmetadata=()=>duration.textContent=fmt(video.duration);
+video.ontimeupdate=()=>{
+  current.textContent=fmt(video.currentTime);
+  progress.value=(video.currentTime/video.duration)*100;
+};
+playBtn.onclick=centerPlay.onclick=()=>{
+  if(firstPlay){
+    infoModal.style.display='flex';
+    firstPlay=false;
+  } else togglePlay();
+};
+closeModal.onclick=()=>{
+  infoModal.style.display='none';
+  togglePlay();
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+};
+function togglePlay(){
+  if(video.paused){video.play();updatePlayIcon('pause');pauseOverlay.style.display='none';}
+  else{video.pause();updatePlayIcon('play');pauseOverlay.style.display='block';}
+}
+function updatePlayIcon(state){
+  if(state==='pause'){playBtn.innerHTML='<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';centerPlay.style.display='none';}
+  else{playBtn.innerHTML='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';centerPlay.style.display='block';}
+}
+progress.oninput=()=>video.currentTime=(progress.value/100)*video.duration;
+rew.onclick=()=>video.currentTime-=10;
+fwd.onclick=()=>video.currentTime+=10;
+mute.onclick=()=>video.muted=!video.muted;
+fullscreen.onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();};
+
+function showUI(){
+  controls.classList.remove('hidden');
+  header.classList.remove('hidden');
+  clearTimeout(hideTimeout);
+  hideTimeout=setTimeout(()=>{
+    controls.classList.add('hidden');
+    header.classList.add('hidden');
+  },3000);
+}
+document.onmousemove=showUI;
+document.onkeydown=(e)=>{
+  showUI();
+  switch(e.key){
+    case "ArrowLeft": video.currentTime-=10; break;
+    case "ArrowRight": video.currentTime+=10; break;
+    case " ": togglePlay(); e.preventDefault(); break;
+    case "Escape": if(document.fullscreenElement) document.exitFullscreen(); else video.pause(); break;
   }
 };
+progress.addEventListener('mousemove',e=>{
+  const rect=progress.getBoundingClientRect();
+  const pos=(e.clientX-rect.left)/rect.width;
+  const time=pos*video.duration;
+  tooltip.style.display='flex';
+  tooltip.textContent=fmt(time);
+  tooltip.style.left=`${e.clientX-80}px`;
+});
+progress.addEventListener('mouseleave',()=>tooltip.style.display='none');
+showUI();
 </script>
 </body>
 </html>
