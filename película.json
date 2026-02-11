@@ -823,44 +823,7 @@
     ],
     "language": "es"
   }
-}"
-  "id": "movie-056",
-  "title": "Angry Birds 2: La Película (2019)",
-  "shortDescription": "Red, Chuck, Bomb y los demás pájaros se unen a los cerditos para detener una amenaza común: Zeta, la águila reina de una isla helada que planea destruir ambas islas con un superarma.",
-  "longDescription": "Después de los eventos de la primera película, la paz entre los pájaros y los cerditos es frágil. Red (Jason Sudeikis / Eugenio Derbez en doblaje latino) sigue siendo el líder protector de Bird Island, pero una nueva amenaza llega desde Eagle Island: Zeta (Leslie Jones / Kate del Castillo), una águila gigante y furiosa que quiere conquistar ambas islas con un arma gigante de hielo. Red, Chuck (Josh Gad / Omar Chaparro), Bomb (Danny McBride / Andrés Bustamante) y los demás pájaros forman una alianza improbable con Leonard (Bill Hader / Andrés Bustamante), el rey de los cerditos, y su sobrina Silver (Rachel Bloom / Jessica Ángeles), una ingeniera brillante. Juntos viajan a Eagle Island para sabotear el plan de Zeta, enfrentando peligros, traiciones y situaciones cómicas en una aventura llena de acción, humor slapstick y referencias al juego original. Con nuevas canciones pegajosas, animación vibrante y un mensaje sobre cooperación y amistad más allá de las diferencias, esta secuela es más grande, más divertida y más familiar que la primera. Dirigida por Thurop Van Orman y producida por Rovio, es un éxito familiar con doblaje latino estelar.",
-  "thumbnail": "https://image.tmdb.org/t/p/w500/4s0xWqV9j9k9wZ7Z5zZ5zZ5zZ5zZ.jpg",
-  "releaseDate": "2019-08-02",
-  "genres": ["Animación", "Aventura", "Comedia", "Familia"],
-  "tags": ["angry-birds-2", "the-angry-birds-movie-2", "red", "chuck", "bomb", "zeta", "pajaros-vs-cerditos", "rovio", "sony-pictures", "animacion-familiar", "eagle-island", "doblaje-latino"],
-  "content": {
-    "dateAdded": "2026-02-09T00:00:00Z",
-    "duration": 5820,
-    "videos": [
-      {
-        "url": "https://dl.dropbox.com/scl/fi/3u1c6imrm4kvltncdbwai/1280x720-Angry-Birds-2-La-pel-cula.mp4?rlkey=jvp7zef05qm0lkrs39h6b66qi&st=2kletoeb&dl=0",
-        "quality": "HD",
-        "videoType": "progressive"
-      }
-    ],
-    "language": "es"
-  }
-}",
-  "releaseDate": "2019-08-02",
-  "genres": ["Animación", "Aventura", "Comedia", "Familia"],
-  "tags": ["angry-birds-2", "the-angry-birds-movie-2", "red", "chuck", "bomb", "zeta", "pajaros-vs-cerditos", "rovio", "sony-pictures", "animacion-familiar", "eagle-island", "doblaje-latino"],
-  "content": {
-    "dateAdded": "2026-02-09T00:00:00Z",
-    "duration": 5820,
-    "videos": [
-      {
-        "url": "https://dl.dropbox.com/scl/fi/3u1c6imrm4kvltncdbwai/1280x720-Angry-Birds-2-La-pel-cula.mp4?rlkey=jvp7zef05qm0lkrs39h6b66qi&st=2kletoeb&dl=0",
-        "quality": "HD",
-        "videoType": "progressive"
-      }
-    ],
-    "language": "es"
-  }
-    },
+},
 {
   "id": "movie-055",
   "title": "Task: Unidad Especial (2025)",
